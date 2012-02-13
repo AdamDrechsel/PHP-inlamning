@@ -1,0 +1,240 @@
+html{
+	padding-top: 20px;
+	background-image: url(bakgrund1.jpg);
+}
+
+body{
+	margin: auto;
+}
+
+#mitt{
+	width: 60%;
+	min-height: 800px;
+	margin-left: 5%;
+	border: 2px solid #6e0047;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
+#logga {
+	background-image: url(logga-klar.jpg);
+	width: 50%;
+	border: 2px solid #6e0047;
+	height: 150px;
+	margin-left: 5%;
+	margin-bottom: 5px;
+}
+
+#login{
+	width: 30%;
+	height: 160px;
+	border: 2px solid #6e0047;
+	float: right;
+	margin-right: 2%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
+#menu{
+	background-image: url(menu-bild.jpg);
+	width: 80%;
+	height: 50px;
+	margin-left: 3%;
+	border: 2px solid #6e0047;
+	margin-top: 3%;
+	background-color: #0099cc
+}
+
+ul#nav li {
+    color: #0000cc;
+    display: inline;
+    float: left;
+    padding: 0;
+}
+ul#nav li a:link, ul#nav li a:visited {
+   border-left: 1px solid #2C2C2C;
+    border-right: 1px solid #000000;
+    color: #6e0047 !important;
+	font-size: 17px;
+    display: inline-block;
+    padding: 5px 20px;
+}
+ul#nav li a:hover, ul#nav li a:focus, ul#nav li a:active {
+    -moz-box-shadow: 0 1px 0 rgba(62, 62, 62, 0.7) inset, 0 -1px 0 rgba(32, 32, 100, 0.7) inset, 0 0 10px rgba(0, 0, 0, 0.3);
+    background: -moz-linear-gradient(center top , #0000cc 0%, #050501 100%) repeat scroll 0 0 transparent;
+    color: #0000CC;
+}
+
+#inlagg{
+	width: 100%;
+	min-height: 190px;
+	border: 2px solid #6e0047;
+	margin-right: 2%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
+#bottom{
+	clear: both;
+	width: 80%;
+	height: 50px;
+	border: 2px solid #6e0047;
+	margin-left: 5%;
+	margin-top: 1%;
+}
+
+h2{
+	color: #CC0066;
+	margin-left: 3%;
+	border-bottom: 2px solid #6e0047;
+	margin-right: 3%;
+}
+
+#copyright{
+	margin-left: 40%;
+}
+
+#klocka{
+	width: 100%;
+	min-height: 150px;
+	border: 2px solid #6e0047;
+	margin-right: 2%;
+	margin-top: 2%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
+#sida2{
+	float: right;
+	width: 30%;
+	margin-right: 2.3%;
+	min-height: 800px;
+}
+
+#news{
+	width: 100%;
+	min-height: 453px;
+	border: 2px solid #6e0047;
+	margin-top: 2%;
+	margin-right: 2%;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
+#time{
+	margin-left: 40%;
+	font-size: 130%;
+}
+
+#namnsdag{
+	margin-left: 37%;
+}
+
+#log{
+	margin-left: 80%;
+	margin-bottom: 20px;
+}
+
+#username, #password{
+	margin-left: 3%;
+}
+
+#user, #pass{
+	color: white;
+	margin-left: 37%;
+}
+
+#remem{
+	color: white;
+	margin-left: 65%;	
+}
+
+#sitefeed{
+	border-top: 2px solid #6e0047;
+	margin-left: 3%;
+	margin-right: 3%;
+	border-bottom: 2px solid #6e0047;
+}	
+
+#status{
+	margin-left: 20%;
+}
+
+#dela{
+	margin-left: 20%;
+}
+
+p{
+	color: white;
+	margin-left: 3%;
+	margin-right: 3%;
+}
+
+h1{
+	color: #CC0066;
+}
+
+.ansikten{
+	float: left;
+	display: block;
+	margin-top: 1%;
+	margin-left: 10%;
+}
+
+h3{
+	margin-top: 5%;
+	margin-left: 25%;
+	color: #CC0066;
+	margin-bottom: 0%;
+}
+
+#an1{
+	margin-left: 5%;
+	width: 80%;
+	min-height: 150px;
+	border-bottom: 2px solid #6e0047;
+}
+
+#an2{
+	margin-left: 5%;
+	width: 80%;
+	min-height: 150px;
+	border-bottom: 2px solid #6e0047;
+}
+
+.status{
+	margin-top: 0%;
+	margin-left: 30%;
+}
+
+#main{
+	margin-top: 2%;
+	margin-bottom: 2%;
+	min-height: 800px;
+}
+
+#reg{
+	color: #6e0047;
+	margin-left: 17%;
+	position: absolute;
+	float: left;
+}
+
+#inlaggold{
+	width: 20%;
+	height: 50px;
+	border: 2px solid #6e0047;
+	margin-top: 10%;
+	margin-left: 40%;
+}
+
+#inlaggold1{
+	margin-left: 18%;
+}
+
+
