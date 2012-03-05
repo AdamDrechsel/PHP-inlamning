@@ -149,6 +149,9 @@ h2{
 	margin-left: 37%;
 }
 
+#loginuser {
+}
+
 #remem{
 	color: white;
 	margin-left: 65%;	
@@ -188,9 +191,10 @@ h1{
 
 h3{
 	margin-top: 5%;
-	margin-left: 25%;
+	margin-left: 10%;
 	color: #CC0066;
 	margin-bottom: 0%;
+	font-size: 180%;
 }
 
 #an1{

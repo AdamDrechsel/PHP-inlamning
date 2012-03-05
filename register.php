@@ -64,7 +64,39 @@ header("content-type: text/html;charset=utf-8");
 					<li><a href="">amet</a></li>
 				</ul>
 			</div>
-			<h3>Register</h3>
+			<h1>Register</h1>
+					<form action="index.php" method="post">
+						<h2>Logga in</h2>
+						<p>
+						<label for="user">Username:</label>
+						</p>
+						<p>
+						<input type="text" name="user" id="username" />
+						</p>
+						<p>
+						<label for="pass">Password:</label>
+						</p>
+						<p>
+						<input type="password" name="pass" id="password" />
+						</p>
+						<input type="submit" />
+					</form>
+					<form action="register-user.php" method="post">
+						<h2>Register</h2>
+						<p>
+						<label for="user">Username:</label>
+						</p>
+						<p>
+						<input type="text" name="username" id="username" />
+						</p>
+						<p>
+						<label for="pass">Password:</label>
+						</p>
+						<p>
+						<input type="password" name="password" id="password" />
+						</p>
+						<input type="submit" />
+					</form>
 		</div>
 	</div>
 	<div id="bottom">
