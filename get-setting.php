@@ -17,8 +17,8 @@ function get_setting($sname)
 	$settings['dsn'] = array(
 		'phptype'	=> 'mysql',
 		'hostspec'	=> 'localhost',
-		'database'	=> 'te-12-adam'
-		'username'	=> 'te-12-adam'
+		'database'	=> 'te-12-adam',
+		'username'	=> 'te-12-adam',
 		'password'	=> '76c5e57f66'
 		);
 		$settings['dbtime'] = 'Europa/Stockholm';
