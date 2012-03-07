@@ -10,7 +10,7 @@
      require_once ("dbcx.php");
      $dbh = dbcx();
 
-     // hämta lösenord + salt från DB
+     // hämta lösenord + salt, saltet står med i kolumnen password i min DB
      $sql = "SELECT `password`, `username` FROM `users` WHERE `username` = :username";
      $stmt = $dbh->prepare($sql);
      $stmt->bindParam(':username', $_POST['user']);
