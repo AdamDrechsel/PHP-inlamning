@@ -21,7 +21,7 @@
 	}
 	$dsn = get_setting("dsn");
 	
-	$dsn	= "{$dsn['phptype']}:host={$dsn['hostspec']};dbname={$dsn['database]}";
+	$dsnstr	= "{$dsn['phptype']}:host={$dsn['hostspec']};dbname={$dsn['database']}";
 	$dbuser	= $dsn['username'];
 	$dbpass	= $dsn['password'];
 	try{
