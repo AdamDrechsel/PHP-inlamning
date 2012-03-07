@@ -1,13 +1,28 @@
 <?php
-header("content-type: text/html;charset=utf-8");
+ /*
+  * author Adam Drechsel
+  *
+  * @todo fixa så att man kan gå till index.php utan att vara inloggad, får göra en sorts if-sats
+  */
+ 
+ session_start();
+ var_dump($_SESSION);
+  //Anslut till DB
+  require_once "dbcx.php";
+  $dbh = dbcx();
+ 
+
 ?>
 <!DOCTYPE html>
 <html lang="sv">
 <head>
+<meta charset="utf-8" />
   <link rel=stylesheet HREF="index.css" TYPE="text/css">
   <title>PHP-inlämning</title>
 </head>
 <body>
+    <p> Logged in as <?php echo $_SESSION['username'];?></p>
+    <a href="logout.php">Logga ut </a>
 	<div id="login">	
 			<p>
 				<label id="user" for="username">Username :</label>

@@ -20,12 +20,11 @@
 		return $db;
 	}
 	$dsn = get_setting("dsn");
-	
 	$dsnstr	= "{$dsn['phptype']}:host={$dsn['hostspec']};dbname={$dsn['database']}";
 	$dbuser	= $dsn['username'];
 	$dbpass	= $dsn['password'];
 	try{
-		$db = new PDO($dsn, $dbuser, $dbpass);
+		$db = new PDO($dsnstr, $dbuser, $dbpass);
 		if (empty($db) ) {
 			throw new Exception("PDO kunde inte instansieras, uppkopplingen misslyckad.");
 		}

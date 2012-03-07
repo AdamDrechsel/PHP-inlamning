@@ -8,15 +8,21 @@ header("content-type: text/html;charset=utf-8");
   <title>PHP-inlämning</title>
 </head>
 <body>
-	<div id="login">	
-			<p>
-				<label id="user" for="username">Username :</label>
-				<input type="text" name="Username" id="username" value="" />
-			</p>
-			<p> 
-				<label id="pass" for="password">Password :</label>
-				<input type="password" name="pass" id="password" />
-			</p>
+	<div id="login">
+    				<form action="login.php" method="post">
+						<p>
+						<label for="user">Username:</label>
+						</p>
+						<p>
+						<input type="text" name="user" id="user" />
+						</p>
+						<p>
+						<label for="pass">Password:</label>
+						</p>
+						<p>
+						<input type="password" name="pass" id="pass" />
+						</p>
+					</form>
 			<p>
 				<label id="remem" for="remember">Remember me</label>
 				<input type="checkbox" name="remember" id="remember" />
@@ -65,7 +71,7 @@ header("content-type: text/html;charset=utf-8");
 				</ul>
 			</div>
 			<h1>Register</h1>
-					<form action="index.php" method="post">
+					<form action="login.php" method="post">
 						<h2>Logga in</h2>
 						<p>
 						<label for="user">Username:</label>

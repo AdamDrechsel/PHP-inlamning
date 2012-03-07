@@ -1,6 +1,7 @@
 html{
 	padding-top: 20px;
-	background-image: url(bakgrund1.jpg);
+	background: url(bakgrund1.jpg) no-repeat top right;
+    background-attachment: fixed;
 }
 
 body{
@@ -146,7 +147,7 @@ h2{
 
 #user, #pass{
 	color: white;
-	margin-left: 37%;
+	margin-left: 10%;
 }
 
 #loginuser {
