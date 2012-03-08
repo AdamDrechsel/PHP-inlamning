@@ -1,6 +1,6 @@
 <?php
  /*
-  * author Adam Drechsel
+  * @author Adam Drechsel
   *
   * @todo fixa så att man kan gå till index.php utan att vara inloggad, får göra en sorts if-sats
   */
