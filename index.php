@@ -6,7 +6,6 @@
   */
  
  session_start();
- var_dump($_SESSION);
   //Anslut till DB
   require_once "dbcx.php";
   $dbh = dbcx();
