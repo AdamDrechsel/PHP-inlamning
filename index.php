@@ -5,11 +5,56 @@
   * @todo fixa så att man kan gå till index.php utan att vara inloggad, får göra en sorts if-sats
   */
  
- session_start();
-  //Anslut till DB
-  require_once "dbcx.php";
-  $dbh = dbcx();
- 
+session_start();
+//Anslut till DB
+require_once "dbcx.php";
+$dbh = dbcx();
+
+// Har man kommit via POST? = Antingen inloggning eller - om redan inloggad - uppdatering
+// Inte via post?
+// Inloggad? = Inte se loginform, se de jag följer(?)
+// Inte inloggad = Se loginform, se senaste från alla (Publika/privata som extra feature i framtiden)
+
+function fetch_private_feed($username) {
+    $sql = "SELECT * FROM `inlagg` ORDER BY ctime DESC LIMIT 0 , 30";
+    // Framtid: JOIN users - för att hämta användardata till varje inlägg inkl avatar
+    // Where skall få en "subscription" utökning - > Ny tabell krävs
+    $stmt = $dbh->prepare($sql);
+    // $stmt->bindParam();
+    $stmt->execute();    
+    return $stmt->fetchAll();
+
+}
+function fetch_public_feed() {
+    $sql = "SELECT * FROM `inlagg` ORDER BY ctime DESC LIMIT 0 , 30";
+    // Framtid: JOIN users - för att hämta användardata till varje inlägg inkl avatar
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();    
+    return $stmt->fetchAll();
+}
+
+if ( empty($_SESSION['username']) && empty($_POST) ) {
+    // Publik feed - ej inloggad, inget inloggningsförsök
+    $feed = fetch_public_feed();
+} elseif ( empty($_POST) ) {
+    // Inloggad men tittar bara på sidan
+    $feed = fetch_private_feed();
+} elseif ( empty($_SESSION['username']) ) {
+    // Inlogningsförsök 
+    // Kolla om försöket lyckats
+    
+    // Om det lyckas -> Visa privat feed
+
+    // Om det misslyckas -> Felmmeddelanden i formulär + publik feed
+
+} else {
+    // Uppdateringsförsök
+    // Kontrollera max och min längd etc
+    // Om kontroller stämmer -> INSERT INTO....
+    // Lyckat? Visa privat feed
+    
+    // Misslyckat? Visa formulär igen (samt privat feed nedanför)
+}
 
 ?>
 <!DOCTYPE html>
@@ -79,11 +124,11 @@
 				</ul>
 			</div>
 				<h1 id="sitefeed">Site feeds</h1>
-					<form method="post" action="">
+					<form method="post" action="inlagg.php">
 						<textarea id="status" name="status" cols="55" rows="5" value="Uppdatera här!">
 							Uppdatera här!
 						</textarea><br>
-						<input id="dela" type="submit" value="Dela" />
+						<input id="dela" type="submit" value="dela" />
 						<input id="uppload" type="submit" value="Lägg till" />
 					</form>
 			<div id="an1">
