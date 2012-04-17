@@ -15,7 +15,8 @@ $dbh = dbcx();
 // Inloggad? = Inte se loginform, se de jag följer(?)
 // Inte inloggad = Se loginform, se senaste från alla (Publika/privata som extra feature i framtiden)
 
-function fetch_private_feed($username) {
+ function fetch_private_feed($username) {
+    $dbh = dbcx();
     $sql = "SELECT * FROM `inlagg` ORDER BY ctime DESC LIMIT 0 , 30";
     // Framtid: JOIN users - för att hämta användardata till varje inlägg inkl avatar
     // Where skall få en "subscription" utökning - > Ny tabell krävs
@@ -25,25 +26,29 @@ function fetch_private_feed($username) {
     return $stmt->fetchAll();
 
 }
+
 function fetch_public_feed() {
+    $dbh = dbcx();
     $sql = "SELECT * FROM `inlagg` ORDER BY ctime DESC LIMIT 0 , 30";
     // Framtid: JOIN users - för att hämta användardata till varje inlägg inkl avatar
     $stmt = $dbh->prepare($sql);
     $stmt->execute();    
     return $stmt->fetchAll();
 }
-
 if ( empty($_SESSION['username']) && empty($_POST) ) {
     // Publik feed - ej inloggad, inget inloggningsförsök
     $feed = fetch_public_feed();
 } elseif ( empty($_POST) ) {
     // Inloggad men tittar bara på sidan
     $feed = fetch_private_feed();
+    // vad vill du visa här?
+    
 } elseif ( empty($_SESSION['username']) ) {
     // Inlogningsförsök 
     // Kolla om försöket lyckats
     
     // Om det lyckas -> Visa privat feed
+    $feed = fetch_private_feed();
 
     // Om det misslyckas -> Felmmeddelanden i formulär + publik feed
 
@@ -54,6 +59,12 @@ if ( empty($_SESSION['username']) && empty($_POST) ) {
     // Lyckat? Visa privat feed
     
     // Misslyckat? Visa formulär igen (samt privat feed nedanför)
+}
+
+$stmt = $dbh->prepare("SELECT u.username, u.image, i.id, i.text, i.ctime FROM `users` AS u INNER JOIN (inlagg AS i) ON (i.username = u.username)");
+// $stmt->bindParam();
+while ( $row = $stmt->fetch() ) {
+    // Create HTML formatted output 
 }
 
 ?>
@@ -131,13 +142,14 @@ if ( empty($_SESSION['username']) && empty($_POST) ) {
 						<input id="dela" type="submit" value="dela" />
 						<input id="uppload" type="submit" value="Lägg till" />
 					</form>
+            <?php foreach ( $feed as $inlagg ): // Börja loop här ?>
 			<div id="an1">
 				<img src="ansikte1.jpg" class="ansikten" />
-					<h3>Adam :</h3>
-						<p class="status"> ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet 
-				lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet
+					<h3><?php echo $username; ?>:</h3>
+						<p class="status"><?php echo $text; ?>
 						</p>
 			</div>
+            <?php endforeach; ?>
 			<div id="an2">
 				<img src="ansikte2.jpg" class="ansikten" />
 				<h3>Linus :</h3>
