@@ -1,6 +1,8 @@
 html{
 	padding-top: 20px;
-	background: url(bakgrund1.jpg) no-repeat top right;
+	/*background: url(bakgrund1.jpg) no-repeat top right;
+    */
+    background-color: black;
     background-attachment: fixed;
 }
 

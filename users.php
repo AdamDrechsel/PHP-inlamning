@@ -15,7 +15,7 @@ $dbh = dbcx();
 // Inloggad? = Inte se loginform, se de jag följer(?)
 // Inte inloggad = Se loginform, se senaste från alla (Publika/privata som extra feature i framtiden)
 
- /*function fetch_private_feed($username) {
+ function fetch_private_feed($username) {
     $dbh = dbcx();
     $sql = "SELECT * FROM `inlagg` ORDER BY ctime DESC LIMIT 0 , 30";
     // Framtid: JOIN users - för att hämta användardata till varje inlägg inkl avatar
@@ -26,51 +26,20 @@ $dbh = dbcx();
     return $stmt->fetchAll();
 
 }
-*/
+
 function fetch_public_feed() {
         $dbh = dbcx();
         //$sql = "SELECT * FROM `inlagg` ORDER BY ctime DESC LIMIT 0 , 30";
-        $stmt = $dbh->prepare("SELECT u.username, u.image, i.id, i.text, i.ctime FROM `users` AS u INNER JOIN (inlagg AS i) ON (i.username = u.username)
-        ORDER BY ctime DESC LIMIT 0 , 30");
+        $stmt = $dbh->prepare("SELECT `text`, `username`, `ctime` FROM `inlagg` WHERE `username` = :username ORDER BY ctime DESC LIMIT 0 , 30");
+        $stmt->bindParam(':username', $_GET['u']);
         // Framtid: JOIN users - för att hämta användardata till varje inlägg inkl avatar
         $stmt->execute();
         return $stmt->fetchAll();
 }
-if ( empty($_SESSION['username']) && empty($_POST) ) {
-    var_dump($_SESSION);
+//if ( empty($_SESSION['username']) && empty($_POST) ) {
     // Publik feed - ej inloggad, inget inloggningsförsök
     $feed = fetch_public_feed();
-} elseif ( empty($_POST) ) {
-    // Inloggad men tittar bara på sidan
-   // $feed = fetch_private_feed();
-    // vad vill du visa här?
-    
-} elseif ( empty($_SESSION['username']) ) {
-    // Inlogningsförsök 
-    // Kolla om försöket lyckats
-    
-    // Om det lyckas -> Visa privat feed
-    $feed = fetch_private_feed();
 
-    // Om det misslyckas -> Felmmeddelanden i formulär + publik feed
-
-} else {
-    // Uppdateringsförsök
-    // Kontrollera max och min längd etc
-    // Om kontroller stämmer -> INSERT INTO....
-    // Lyckat? Visa privat feed
-    
-    // Misslyckat? Visa formulär igen (samt privat feed nedanför)
-}
-
-// $stmt->bindParam();
-    /*$stmt->execute();
-    $data = $stmt->fetchAll();
-foreach ( $data as $value ) {
-    $username = $value['username'];
-    $text = $value['text'];
-}
-*/
 
 ?>
 <!DOCTYPE html>
@@ -140,11 +109,6 @@ foreach ( $data as $value ) {
 				</ul>
 			</div>
 				<h1 id="sitefeed">Site feeds</h1>
-					<form method="post" action="inlagg.php">
-						<textarea id="status" name="status" cols="55" rows="5" placeholder="Uppdatera här!"></textarea><br>
-						<input id="dela" type="submit" value="dela" />
-						<input id="uppload" type="submit" value="Lägg till" />
-					</form>
             <?php foreach ( $feed as $inlagg ):
                 
 
