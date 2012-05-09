@@ -1,8 +1,8 @@
 <?php
  /*
-  * author Adam Drechsel
+  * @author Adam Drechsel
   *
-  * @todo fixa så att man kan gå till index.php utan att vara inloggad, får göra en sorts if-sats
+  * @todo 
   */
  
 session_start();
@@ -15,7 +15,7 @@ $dbh = dbcx();
 // Inloggad? = Inte se loginform, se de jag följer(?)
 // Inte inloggad = Se loginform, se senaste från alla (Publika/privata som extra feature i framtiden)
 
- /*function fetch_private_feed($username) {
+ function fetch_private_feed() {
     $dbh = dbcx();
     $sql = "SELECT * FROM `inlagg` ORDER BY ctime DESC LIMIT 0 , 30";
     // Framtid: JOIN users - för att hämta användardata till varje inlägg inkl avatar
@@ -26,7 +26,8 @@ $dbh = dbcx();
     return $stmt->fetchAll();
 
 }
-*/
+
+
 function fetch_public_feed() {
         $dbh = dbcx();
         //$sql = "SELECT * FROM `inlagg` ORDER BY ctime DESC LIMIT 0 , 30";
@@ -37,12 +38,11 @@ function fetch_public_feed() {
         return $stmt->fetchAll();
 }
 if ( empty($_SESSION['username']) && empty($_POST) ) {
-    var_dump($_SESSION);
     // Publik feed - ej inloggad, inget inloggningsförsök
     $feed = fetch_public_feed();
 } elseif ( empty($_POST) ) {
     // Inloggad men tittar bara på sidan
-   // $feed = fetch_private_feed();
+    $feed = fetch_private_feed();
     // vad vill du visa här?
     
 } elseif ( empty($_SESSION['username']) ) {
@@ -79,39 +79,59 @@ foreach ( $data as $value ) {
 <meta charset="utf-8" />
   <link rel=stylesheet HREF="index.css" TYPE="text/css">
   <title>PHP-inlämning</title>
+  
+  <script language="JavaScript">
+
+var timerID = null;
+var timerRunning = false;
+
+function stopclock (){
+        if(timerRunning)
+                clearTimeout(timerID);
+        timerRunning = false;
+}
+
+function showtime () {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds()
+        var timeValue = hours
+        timeValue += ((minutes < 10) ? ":0" : ":") + minutes
+        timeValue += ((seconds < 10) ? ":0" : ":") + seconds
+        document.clock.face.value = timeValue;
+        timerID = setTimeout("showtime()",1000);
+        timerRunning = true;
+}
+function startclock () {
+        stopclock();
+        showtime();
+}
+
+</script>
 </head>
-<body>
-    <p> Logged in as <?php echo $_SESSION['username'];?></p>
-    <a href="logout.php">Logga ut </a>
-	<div id="login">	
-			<p>
-				<label id="user" for="username">Username :</label>
-				<input type="text" name="Username" id="username" value="" />
-			</p>
-			<p> 
-				<label id="pass" for="password">Password :</label>
-				<input type="password" name="pass" id="password" />
-			</p>
-			<p>
-				<label id="remem" for="remember">Remember me</label>
-				<input type="checkbox" name="remember" id="remember" />
-			</p>
-			<p id="reglog">
-				<a id="reg" href="register.php">Register</a>
-				<input id="log" type="submit" value="Login" />
-			</p>
-	</div>
-	<div id="logga">
-	</div>
+<body onLoad="startclock()">
+    <div id="topbar">
+        <p id="logginname"> Logged in as <a href="users.php?u=<?php echo $feed['username'];?>" id="links"> <?php echo $_SESSION['username'];?></a></p>
+            <a id="logout" href="logout.php">Logga ut </a>
+    </div>
 	<div id="main">
 		<div id="sida2">
 			<div id="inlagg">
-				<h2>Senaste inläggen</h2>
-				<p> lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet</p>
+				<h2>Senaste inlägget</h2>
+                <?php echo <<<INLAGG
+                <h3 id="sinlagg"><a href="users.php?u={$feed[0]['username']}" id="links">{$feed[0]['username']}:</a></h3>
+                <p>{$feed[0]['text']}</p>
+                <p>{$feed[0]['ctime']}</p>
+INLAGG;
+?>
 			</div>
 			<div id="klocka">
 				<h2>Klocka</h2>
-				<p id="time">02:14</p>
+				<form name="clock" onSubmit="0">
+  <div align="center"><center><p><input type="text" name="face" size="6" value> </p>
+  </center></div>
+</form>
 				<p id="namnsdag">Adam & Eva</p>
 			</div>
 			<div id="news">
@@ -128,18 +148,9 @@ foreach ( $data as $value ) {
 			</div>
 		</div>
 		<div id="mitt">
-			<div id="menu">
-				<ul id="nav">
-					<li><a href="">Home</a></li>
-					<li><a href="">Info</a></li>
-					<li><a href="">lorem</a></li>
-					<li><a href="">ipsum</a></li>
-					<li><a href="">dolor</a></li>
-					<li><a href="">sit</a></li>
-					<li><a href="">amet</a></li>
-				</ul>
-			</div>
-				<h1 id="sitefeed">Site feeds</h1>
+            <div id="mittbar">
+				<p id="sitefeed">Uppdateringar</p>
+            </div>    
 					<form method="post" action="inlagg.php">
 						<textarea id="status" name="status" cols="55" rows="5" placeholder="Uppdatera här!"></textarea><br>
 						<input id="dela" type="submit" value="dela" />
@@ -150,10 +161,11 @@ foreach ( $data as $value ) {
 
             ?>
 			<div id="an1">
-				<img src="ansikte1.jpg" class="ansikten" />
-					<h3><a href="users.php?u=<?php echo $inlagg['username'];?>"><?php echo $inlagg['username']; ?>:</a></h3>
-						<p class="status"><?php echo $inlagg['text']; ?>
-						</p>
+					<h3 id="name"><a href="users.php?u=<?php echo $inlagg['username'];?>" id="links"><?php echo $inlagg['username']; ?>:</a></h3>
+                            <div id="statusbild">
+                                    <p class="statustid"><?php echo $inlagg['ctime']; ?></p>
+                                    <p class="status"><?php echo $inlagg['text']; ?></p>    
+                            </div>        
 			</div>
             <?php endforeach; ?>
 		</div>
