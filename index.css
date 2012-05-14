@@ -26,11 +26,8 @@ body{
 #inlagg{
 	width: 100%;
 	min-height: 190px;
-	border: 2px solid #6e0047;
+	border: 2px solid black;
 	margin-right: 2%;
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
-	border-radius: 30px;
 }
 
 #bottom{
@@ -56,12 +53,9 @@ h2{
 #klocka{
 	width: 100%;
 	min-height: 150px;
-	border: 2px solid #6e0047;
+	border: 2px solid black;
 	margin-right: 2%;
 	margin-top: 2%;
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
-	border-radius: 30px;
 }
 
 #sida2{
@@ -74,12 +68,9 @@ h2{
 #news{
 	width: 100%;
 	min-height: 453px;
-	border: 2px solid #6e0047;
+	border: 2px solid black;
 	margin-top: 2%;
 	margin-right: 2%;
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
-	border-radius: 30px;
 }
 
 #time{
@@ -117,6 +108,7 @@ h2{
 	margin-left: 3%;
 	margin-right: 3%;
     font-size: 140%;
+    width: 70%;
 }	
 
 #status{
@@ -182,7 +174,7 @@ h3{
 	margin-left: 18%;
 }
 
-#links{
+.links{
     font-family: "Times new roman", Times, Serif;
     color: black;
 }
@@ -215,7 +207,7 @@ A:hover {text-decoration: underline overline; color: red;}
 #name{
     float: left;
     margin-top: 4%;
-    margin-left: 15%;
+    margin-left: 12%;
 }   
 
 #topbar{
@@ -236,9 +228,22 @@ A:hover {text-decoration: underline overline; color: red;}
 }
 
 #mittbar{
-    width: 100%;
+    width: 99,5%;
     height: 50px;
     background-color: #cfa655;
     border: 1px solid black;    
+}
+
+#sidebar{
+    width: 99,5%;
+    height: 50px;
+    background-color: #cfa655;
+    border: 1px solid black;
+}
+
+#huvudsida{
+    float: right;
+    width: 20%;
+    margin-top: 3%;
 }
 

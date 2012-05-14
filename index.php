@@ -9,19 +9,20 @@ session_start();
 //Anslut till DB
 require_once "dbcx.php";
 $dbh = dbcx();
+// kollar ifall du är inloggad, om inte, gå till register.php
+if(!isset($_SESSION['username'])){
+    HEADER("location: register.php");
+}
 
-// Har man kommit via POST? = Antingen inloggning eller - om redan inloggad - uppdatering
-// Inte via post?
-// Inloggad? = Inte se loginform, se de jag följer(?)
-// Inte inloggad = Se loginform, se senaste från alla (Publika/privata som extra feature i framtiden)
-
+// funktioner som gör det möjligt att uppdatera statusar, har två olika, för i framtid kunna ha en sida som man inte behöver vara
+// inloggad på, tänkte det från början men det blev inte som jag ville, så körde med detta istället.
  function fetch_private_feed() {
     $dbh = dbcx();
     $sql = "SELECT * FROM `inlagg` ORDER BY ctime DESC LIMIT 0 , 30";
     // Framtid: JOIN users - för att hämta användardata till varje inlägg inkl avatar
     // Where skall få en "subscription" utökning - > Ny tabell krävs
     $stmt = $dbh->prepare($sql);
-    // $stmt->bindParam();
+    $stmt->bindParam(':inlagg', $_POST['inlagg'] );
     $stmt->execute();    
     return $stmt->fetchAll();
 
@@ -37,14 +38,13 @@ function fetch_public_feed() {
         $stmt->execute();
         return $stmt->fetchAll();
 }
+// kollar om du är inloggad eller ej, lite onödigt nu men bra för framtiden.
 if ( empty($_SESSION['username']) && empty($_POST) ) {
     // Publik feed - ej inloggad, inget inloggningsförsök
     $feed = fetch_public_feed();
 } elseif ( empty($_POST) ) {
     // Inloggad men tittar bara på sidan
-    $feed = fetch_private_feed();
-    // vad vill du visa här?
-    
+    $feed = fetch_private_feed();    
 } elseif ( empty($_SESSION['username']) ) {
     // Inlogningsförsök 
     // Kolla om försöket lyckats
@@ -54,23 +54,7 @@ if ( empty($_SESSION['username']) && empty($_POST) ) {
 
     // Om det misslyckas -> Felmmeddelanden i formulär + publik feed
 
-} else {
-    // Uppdateringsförsök
-    // Kontrollera max och min längd etc
-    // Om kontroller stämmer -> INSERT INTO....
-    // Lyckat? Visa privat feed
-    
-    // Misslyckat? Visa formulär igen (samt privat feed nedanför)
 }
-
-// $stmt->bindParam();
-    /*$stmt->execute();
-    $data = $stmt->fetchAll();
-foreach ( $data as $value ) {
-    $username = $value['username'];
-    $text = $value['text'];
-}
-*/
 
 ?>
 <!DOCTYPE html>
@@ -112,22 +96,27 @@ function startclock () {
 </head>
 <body onLoad="startclock()">
     <div id="topbar">
-        <p id="logginname"> Logged in as <a href="users.php?u=<?php echo $feed['username'];?>" id="links"> <?php echo $_SESSION['username'];?></a></p>
+    <!-- Här fixar jag så att man ser sitt användarnamn samt en link så att man kan se sina tidigare uppdateringar -->
+        <p id="logginname"> Logged in as <a href="users.php?u=<?php echo $_SESSION['username'];?>" class="links"> <?php echo $_SESSION['username'];?></a></p>
             <a id="logout" href="logout.php">Logga ut </a>
     </div>
 	<div id="main">
 		<div id="sida2">
 			<div id="inlagg">
-				<h2>Senaste inlägget</h2>
+              <div id="sidebar">
+				<p id="sitefeed">Senaste inlägget</p>
+              </div>  
                 <?php echo <<<INLAGG
-                <h3 id="sinlagg"><a href="users.php?u={$feed[0]['username']}" id="links">{$feed[0]['username']}:</a></h3>
+                <h3 id="sinlagg"><a href="users.php?u={$feed[0]['username']}" class="links">{$feed[0]['username']}:</a></h3>
                 <p>{$feed[0]['text']}</p>
                 <p>{$feed[0]['ctime']}</p>
 INLAGG;
 ?>
 			</div>
 			<div id="klocka">
-				<h2>Klocka</h2>
+              <div id="sidebar">
+				<p id="sitefeed">Klocka</p>
+              </div> 
 				<form name="clock" onSubmit="0">
   <div align="center"><center><p><input type="text" name="face" size="6" value> </p>
   </center></div>
@@ -135,7 +124,9 @@ INLAGG;
 				<p id="namnsdag">Adam & Eva</p>
 			</div>
 			<div id="news">
-				<h2>Site news</h2>
+              <div id="sidebar">
+				<p id="sitefeed">News</p>
+              </div> 
 				<p>lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet 
 				lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet
 				lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet 
@@ -154,14 +145,13 @@ INLAGG;
 					<form method="post" action="inlagg.php">
 						<textarea id="status" name="status" cols="55" rows="5" placeholder="Uppdatera här!"></textarea><br>
 						<input id="dela" type="submit" value="dela" />
-						<input id="uppload" type="submit" value="Lägg till" />
 					</form>
             <?php foreach ( $feed as $inlagg ):
                 
 
             ?>
 			<div id="an1">
-					<h3 id="name"><a href="users.php?u=<?php echo $inlagg['username'];?>" id="links"><?php echo $inlagg['username']; ?>:</a></h3>
+					<h3 id="name"><a href="users.php?u=<?php echo $inlagg['username'];?>" class="links"><?php echo $inlagg['username']; ?>:</a></h3>
                             <div id="statusbild">
                                     <p class="statustid"><?php echo $inlagg['ctime']; ?></p>
                                     <p class="status"><?php echo $inlagg['text']; ?></p>    

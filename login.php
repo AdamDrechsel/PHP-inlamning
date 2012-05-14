@@ -26,8 +26,11 @@
             header('Location: index.php');
             exit;
          } else{
-            echo "Fel lösenord";    
+             $_SESSION['fel'] = "Fel lösenord";
+            header('Location: register.php');             
         }
     }
+    
+ 
 
  

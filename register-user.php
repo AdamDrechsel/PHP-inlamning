@@ -25,3 +25,4 @@ else {
     $stmt->bindParam(':password', $pass);
     $stmt->execute();
 }
+header('Location: register.php');

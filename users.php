@@ -81,22 +81,26 @@ function startclock () {
 </head>
 <body onLoad="startclock()">
     <div id="topbar">
-        <p id="logginname"> Logged in as <a href="users.php?u=<?php echo $feed['username'];?>" id="links"> <?php echo $_SESSION['username'];?></a></p>
+        <p id="logginname"> Logged in as <a href="users.php?u=<?php echo $_SESSION['username'];?>" class="links"> <?php echo $_SESSION['username'];?></a></p>
             <a id="logout" href="logout.php">Logga ut </a>
     </div>
 	<div id="main">
 		<div id="sida2">
 			<div id="inlagg">
-				<h2>Senaste inlägget</h2>
+	          <div id="sidebar">
+				<p id="sitefeed">Senaste inlägget av användaren</p>
+              </div> 
                 <?php echo <<<INLAGG
-                <h3 id="sinlagg"><a href="users.php?u={$feed[0]['username']}" id="links">{$feed[0]['username']}:</a></h3>
+                <h3 id="sinlagg"><a href="users.php?u={$feed[0]['username']}" class="links">{$feed[0]['username']}:</a></h3>
                 <p>{$feed[0]['text']}</p>
                 <p>{$feed[0]['ctime']}</p>
 INLAGG;
 ?>
 			</div>
 			<div id="klocka">
-				<h2>Klocka</h2>
+              <div id="sidebar">
+				<p id="sitefeed">Klocka</p>
+              </div> 
 				<form name="clock" onSubmit="0">
   <div align="center"><center><p><input type="text" name="face" size="6" value> </p>
   </center></div>
@@ -104,7 +108,9 @@ INLAGG;
 				<p id="namnsdag">Adam & Eva</p>
 			</div>
 			<div id="news">
-				<h2>Site news</h2>
+              <div id="sidebar">
+				<p id="sitefeed">News</p>
+              </div> 
 				<p>lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet 
 				lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet
 				lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet 
@@ -117,18 +123,16 @@ INLAGG;
 			</div>
 		</div>
 		<div id="mitt">
-				<h1 id="sitefeed">Site feeds</h1>
-					<form method="post" action="inlagg.php">
-						<textarea id="status" name="status" cols="55" rows="5" placeholder="Uppdatera här!"></textarea><br>
-						<input id="dela" type="submit" value="dela" />
-						<input id="uppload" type="submit" value="Lägg till" />
-					</form>
+            <div id="mittbar">
+                <a href="index.php" class="links" id="huvudsida">Tillbaka till huvudsidan</a>
+				<p id="sitefeed">Uppdateringar av <?php echo $_GET['u'] ?> </p>
+            </div>
             <?php foreach ( $feed as $inlagg ):
                 
 
             ?>
 			<div id="an1">
-					<h3 id="name"><a href="users.php?u=<?php echo $inlagg['username'];?>" id="links"><?php echo $inlagg['username']; ?>:</a></h3>
+					<h3 id="name"><a href="users.php?u=<?php echo $inlagg['username'];?>" class="links"><?php echo $inlagg['username']; ?>:</a></h3>
                             <div id="statusbild">
                                     <p class="statustid"><?php echo $inlagg['ctime']; ?></p>
                                     <p class="status"><?php echo $inlagg['text']; ?></p>    
