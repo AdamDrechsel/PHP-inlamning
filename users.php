@@ -1,10 +1,10 @@
 <?php
  /*
-  * author Adam Drechsel
+  * Sidan som visas när man klickar på en specifik användare
+  * Man kan se inlägg som användaren har gjort tidigare o.s.v
   *
-  * @todo fixa så att man kan gå till index.php utan att vara inloggad, får göra en sorts if-sats
+  * @author Adam Drechsel
   */
- 
 session_start();
 //Anslut till DB
 require_once "dbcx.php";
@@ -48,38 +48,8 @@ function fetch_public_feed() {
 <meta charset="utf-8" />
   <link rel=stylesheet HREF="index.css" TYPE="text/css">
   <title>PHP-inlämning</title>
-  
-  <script language="JavaScript">
-
-var timerID = null;
-var timerRunning = false;
-
-function stopclock (){
-        if(timerRunning)
-                clearTimeout(timerID);
-        timerRunning = false;
-}
-
-function showtime () {
-        var now = new Date();
-        var hours = now.getHours();
-        var minutes = now.getMinutes();
-        var seconds = now.getSeconds()
-        var timeValue = hours
-        timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-        timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-        document.clock.face.value = timeValue;
-        timerID = setTimeout("showtime()",1000);
-        timerRunning = true;
-}
-function startclock () {
-        stopclock();
-        showtime();
-}
-
-</script>
 </head>
-<body onLoad="startclock()">
+<body>
     <div id="topbar">
         <p id="logginname"> Logged in as <a href="users.php?u=<?php echo $_SESSION['username'];?>" class="links"> <?php echo $_SESSION['username'];?></a></p>
             <a id="logout" href="logout.php">Logga ut </a>
@@ -97,16 +67,6 @@ function startclock () {
 INLAGG;
 ?>
 			</div>
-			<div id="klocka">
-              <div id="sidebar">
-				<p id="sitefeed">Klocka</p>
-              </div> 
-				<form name="clock" onSubmit="0">
-  <div align="center"><center><p><input type="text" name="face" size="6" value> </p>
-  </center></div>
-</form>
-				<p id="namnsdag">Adam & Eva</p>
-			</div>
 			<div id="news">
               <div id="sidebar">
 				<p id="sitefeed">News</p>
@@ -123,24 +83,29 @@ INLAGG;
 			</div>
 		</div>
 		<div id="mitt">
-            <div id="mittbar">
-                <a href="index.php" class="links" id="huvudsida">Tillbaka till huvudsidan</a>
+			<div id="mittbar">
+				<a href="index.php" class="links" id="huvudsida">Tillbaka till huvudsidan</a>
 				<p id="sitefeed">Uppdateringar av <?php echo $_GET['u'] ?> </p>
-            </div>
-            <?php foreach ( $feed as $inlagg ):
-                
-
-            ?>
-			<div id="an1">
-					<h3 id="name"><a href="users.php?u=<?php echo $inlagg['username'];?>" class="links"><?php echo $inlagg['username']; ?>:</a></h3>
-                            <div id="statusbild">
-                                    <p class="statustid"><?php echo $inlagg['ctime']; ?></p>
-                                    <p class="status"><?php echo $inlagg['text']; ?></p>    
-                            </div>        
 			</div>
-            <?php endforeach; ?>
-		</div>
-	</div>
+			<?php 
+				if (empty($feed)) {
+					echo "<p>användaren finns inte</p>";
+        } else {
+        	foreach ( $feed as $inlagg ):
+      ?>    
+			<div id="an1">
+				<h3 id="name"><a href="users.php?u=<?php echo $inlagg['username'];?>" class="links"><?php echo $inlagg['username']; ?>:</a></h3>
+				<div id="statusbild">
+					<p class="statustid"><?php echo $inlagg['ctime']; ?></p>
+					<p class="status"><?php echo $inlagg['text']; ?></p>
+				</div>        
+			</div>
+			<?php
+    		endforeach;
+    		}
+    	?>
+    	</div>
+    </div>
 	<div id="bottom">
 		<p id="copyright">Copyright © Adam drechsel</p>
 	</div>

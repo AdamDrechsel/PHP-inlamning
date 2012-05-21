@@ -1,8 +1,11 @@
 <?php
  /*
+  * Själva huvudsidan, gör det möjligt att uppdatera sin status, samt kolla på andras uppdateringar 
+  * Man kan även klicka sig vidare till andra användare och se vad dom har skrivit tidigare.
+  *
   * @author Adam Drechsel
   *
-  * @todo 
+  *
   */
  
 session_start();
@@ -63,38 +66,8 @@ if ( empty($_SESSION['username']) && empty($_POST) ) {
 <meta charset="utf-8" />
   <link rel=stylesheet HREF="index.css" TYPE="text/css">
   <title>PHP-inlämning</title>
-  
-  <script language="JavaScript">
-
-var timerID = null;
-var timerRunning = false;
-
-function stopclock (){
-        if(timerRunning)
-                clearTimeout(timerID);
-        timerRunning = false;
-}
-
-function showtime () {
-        var now = new Date();
-        var hours = now.getHours();
-        var minutes = now.getMinutes();
-        var seconds = now.getSeconds()
-        var timeValue = hours
-        timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-        timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-        document.clock.face.value = timeValue;
-        timerID = setTimeout("showtime()",1000);
-        timerRunning = true;
-}
-function startclock () {
-        stopclock();
-        showtime();
-}
-
-</script>
-</head>
-<body onLoad="startclock()">
+ 
+<body>
     <div id="topbar">
     <!-- Här fixar jag så att man ser sitt användarnamn samt en link så att man kan se sina tidigare uppdateringar -->
         <p id="logginname"> Logged in as <a href="users.php?u=<?php echo $_SESSION['username'];?>" class="links"> <?php echo $_SESSION['username'];?></a></p>
@@ -112,16 +85,6 @@ function startclock () {
                 <p>{$feed[0]['ctime']}</p>
 INLAGG;
 ?>
-			</div>
-			<div id="klocka">
-              <div id="sidebar">
-				<p id="sitefeed">Klocka</p>
-              </div> 
-				<form name="clock" onSubmit="0">
-  <div align="center"><center><p><input type="text" name="face" size="6" value> </p>
-  </center></div>
-</form>
-				<p id="namnsdag">Adam & Eva</p>
 			</div>
 			<div id="news">
               <div id="sidebar">
@@ -151,7 +114,7 @@ INLAGG;
 
             ?>
 			<div id="an1">
-					<h3 id="name"><a href="users.php?u=<?php echo $inlagg['username'];?>" class="links"><?php echo $inlagg['username']; ?>:</a></h3>
+					<h3 id="name"><a href="users.php?u=<?php echo htmlspecialchars($inlagg['username']);?>" class="links"><?php echo $inlagg['username']; ?>:</a></h3>
                             <div id="statusbild">
                                     <p class="statustid"><?php echo $inlagg['ctime']; ?></p>
                                     <p class="status"><?php echo $inlagg['text']; ?></p>    

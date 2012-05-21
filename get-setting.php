@@ -1,4 +1,11 @@
 <?php
+/*
+* Password o.s.v till DB samt tidszon
+* 
+* 
+*
+* @author Adam Drechsel
+*/
 function get_setting($name) {
     static $settings;
     if (!empty($settings)) {

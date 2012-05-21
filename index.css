@@ -73,6 +73,13 @@ h2{
 	margin-right: 2%;
 }
 
+#newsreg{
+	width: 100%;
+	min-height: 453px;
+	border: 2px solid black;
+	margin-right: 2%;
+}
+
 #time{
 	margin-left: 40%;
 	font-size: 130%;
@@ -87,14 +94,16 @@ h2{
 	margin-bottom: 20px;
 }
 
-#username, #password{
+input[type="text"], input[type="password"], input[type="email"] {
 	margin-left: 3%;
 }
 
+/*
 #user, #pass{
 	color: white;
 	margin-left: 10%;
 }
+*/
 
 #loginuser {
 }
